@@ -4,31 +4,19 @@ import { useAppDispatch, useAppSelector } from '../../../../shared';
 import { Column } from '../../../../entities/column';
 import { fetchTasks, moveTask } from '../../../../entities/taskCard';
 import { TaskStatus } from '../../../../entities/taskCard';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState, AppDispatch } from '../../app/store';
+import { RootState } from '../../../store';
 
-// import { ModalAdd } from '../../../../modalAdd';
-// import { Button } from '@consta/uikit/Button';
-// import { openModal } from '../../../../modalAdd';
+import { ModalAdd } from '../../../../modalAdd';
+import { Button } from '@consta/uikit/Button';
+import { openModal } from '../../../../modalAdd';
 // import { deleteTask } from '../../entities/taskCard';
 import './styles.scss';
 
-// interface Task {
-//   id: string;
-//   title: string;
-//   description: string;
-// }
-
-// interface ColumnType {
-//   id: string;
-//   title: string;
-//   tasks: Task[];
-// }
-
 export const Board: React.FC = () => {
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector((state) => state.tasks.tasks);
-  const statuses = ['Очередь', 'В работе', 'На проверке', 'Выполнено'];
+  // const tasks = useAppSelector((state) => state.tasks.tasks);
+  const tasks = useAppSelector((state: RootState) => state.tasks.tasks);
+  const statuses: TaskStatus[] = ['Очередь', 'В работе', 'На проверке', 'Выполнено'];
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -47,32 +35,32 @@ export const Board: React.FC = () => {
 
     if (over && active.id !== over.id) {
       const currentColumnIndex = statuses.indexOf(active.data.current?.column);
-      const newColumnIndex = statuses.indexOf(over.id);
+      const newColumnIndex = statuses.indexOf(over.id as TaskStatus);
 
       if (newColumnIndex === currentColumnIndex + 1) {
-        handleTaskMove(parseInt(active.id), over.id);
+        // handleTaskMove(parseInt(active.id), over.id);
+        handleTaskMove(active.id, over.id);
       }
     }
   };
 
   return (
     <>
-      {/* <Button
+      <Button
         size="m"
         view="primary"
         label="Добавить задачу"
         onClick={() => dispatch(openModal())}
       />
 
-      <ModalAdd /> */}
+      <ModalAdd />
       <DndContext onDragEnd={handleDragEnd}>
         <div className="board">
           {statuses.map((column) => (
-            // <Column key={column} tasks={tasks} title={column} onTaskMove={handleTaskMove} />
             <Column
               key={column}
               tasks={tasks}
-              status={column as any}
+              status={column}
               onTaskMove={handleTaskMove}
               // onDelete={handleDelete}
             />

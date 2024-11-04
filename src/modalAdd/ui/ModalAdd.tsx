@@ -2,9 +2,9 @@ import { Modal } from '@consta/uikit/Modal';
 import { Button } from '@consta/uikit/Button';
 import { Text } from '@consta/uikit/Text';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../../app/store';
+import { RootState, AppDispatch } from '../../app/store';
 import { closeModal } from '../model/modalAddSlice';
-import { addTask } from '../../../entities/taskCard';
+import { addTask } from '../../entities/taskCard/model/taskCardSlice';
 import { useState } from 'react';
 
 export const ModalAdd: React.FC = () => {
@@ -13,12 +13,33 @@ export const ModalAdd: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  const [titleError, setTitleError] = useState('');
+  const [descriptionError, setDescriptionError] = useState('');
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(addTask({ title, description }));
-    dispatch(closeModal());
-    setTitle('');
-    setDescription('');
+    let isValid = true;
+
+    if (title.trim().length < 3) {
+      setTitleError('Название должно быть минимум 3 символ.');
+      isValid = false;
+    } else {
+      setTitleError('');
+    }
+
+    if (description.trim().length < 3) {
+      setDescriptionError('Описание должно быть минимум 3 символа');
+      isValid = false;
+    } else {
+      setDescriptionError('');
+    }
+
+    if (isValid) {
+      dispatch(addTask({ title, description }));
+      dispatch(closeModal());
+      setTitle('');
+      setDescription('');
+    }
   };
 
   return (
@@ -41,7 +62,7 @@ export const ModalAdd: React.FC = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <span className="form__span"></span>
+          <span className="form__span">{titleError}</span>
         </label>
 
         <label className="form__label">
@@ -54,7 +75,7 @@ export const ModalAdd: React.FC = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <span className="form__span"></span>
+          <span className="form__span">{descriptionError}</span>
         </label>
         <button className="form__button" type="submit">
           Добавить
