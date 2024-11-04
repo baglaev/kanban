@@ -2,9 +2,9 @@ import { Modal } from '@consta/uikit/Modal';
 import { Button } from '@consta/uikit/Button';
 import { Text } from '@consta/uikit/Text';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../app/store';
+import { RootState, AppDispatch } from '../../../app/store';
 import { closeModal } from '../model/modalAddSlice';
-import { addTaskThunk } from '../../entities/taskCard/model/taskCardSlice';
+import { addTaskThunk } from '../../../entities/taskCard/model/taskCardSlice';
 import { useState } from 'react';
 import './styles.scss';
 

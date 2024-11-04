@@ -6,9 +6,9 @@ import { fetchTasksThunk, moveTask, deleteTaskThunk } from '../../../../entities
 import { TaskStatus } from '../../../../entities/taskCard';
 import { RootState } from '../../../store';
 
-import { ModalAdd } from '../../../../modalAdd';
+import { ModalAdd } from '../../../../features/modalAdd';
 import { Button } from '@consta/uikit/Button';
-import { openModal } from '../../../../modalAdd';
+import { openModal } from '../../../../features/modalAdd';
 import './styles.scss';
 
 export const Board: React.FC = () => {

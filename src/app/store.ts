@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { tasksReducer } from '../entities/taskCard';
-import { modalReducer } from '../modalAdd';
+import { modalReducer } from '../features/modalAdd';
 
 const store = configureStore({
   reducer: {
