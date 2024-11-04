@@ -1,0 +1,12 @@
+.card {
+  width: 200px;
+  transition: transform 0.2s ease;
+  margin-bottom: 10px;
+  // border: 1px solid #007bff;
+  // cursor: grab;
+  // user-select: none;
+
+  &__button {
+    margin-top: 20px;
+  }
+}
