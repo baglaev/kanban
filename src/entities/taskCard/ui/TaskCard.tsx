@@ -6,17 +6,18 @@ import { Button } from '@consta/uikit/Button';
 import { useDraggable } from '@dnd-kit/core';
 import { IconDrag } from '@consta/icons/IconDrag';
 import { Task } from '../../taskCard/model/taskCardSlice';
+import { TaskStatus } from '../../taskCard';
 
 interface TaskCardProps {
   task: Task;
-  // onDelete: (id: string) => void;
-  onMove: (id: string, newStatus: Task['status']) => void;
+  onDelete: (id: string) => void;
+  onMove: (id: string, newStatus: TaskStatus) => void;
 }
 
-export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
   const { attributes, listeners, setNodeRef } = useDraggable({
-    // id: task.id.toString(),
-    id: task.id,
+    id: task.id.toString(),
+    // id: task.id,
     data: { column: task.status },
   });
   return (
@@ -26,7 +27,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         {task.title}title
       </Text>
       <Text size="s" view="primary">
-        {task.description}description
+        {task.description}
       </Text>
       <Text size="xs" view="secondary">
         ID: {task.id}
@@ -39,7 +40,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         iconRight={IconDocDelete}
         iconSize="s"
         onClick={() => {
-          // onDelete(id);
+          onDelete(task.id);
         }}
       />
     </Card>

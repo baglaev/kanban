@@ -8,10 +8,10 @@ interface ColumnProps {
   status: TaskStatus;
   tasks: Task[];
   onTaskMove: (taskId: string, newStatus: Task['status']) => void;
-  // onDelete: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export const Column: React.FC<ColumnProps> = ({ status, tasks, onTaskMove }) => {
+export const Column: React.FC<ColumnProps> = ({ status, tasks, onTaskMove, onDelete }) => {
   const { setNodeRef } = useDroppable({ id: status });
   // console.log('id useDroppable:', id);
 
@@ -25,7 +25,7 @@ export const Column: React.FC<ColumnProps> = ({ status, tasks, onTaskMove }) => 
           key={task.id}
           task={task}
           onMove={onTaskMove}
-          // onDelete={onDelete}
+          onDelete={onDelete}
           // onMove={onTaskMove}
         />
       ))}

@@ -72,6 +72,23 @@ export const addTask = createAsyncThunk<
   }
 });
 
+export const deleteTask = createAsyncThunk<string, string, { rejectValue: string }>(
+  'tasks/deleteTask',
+  async (taskId: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Ошибка удаления задачи');
+      }
+      return taskId;
+    } catch (error: unknown) {
+      return rejectWithValue((error as Error).message);
+    }
+  },
+);
+
 const setLoading = (state: TasksState) => {
   state.loading = true;
   state.error = null;
@@ -108,7 +125,13 @@ const tasksSlice = createSlice({
         state.loading = false;
         state.tasks.push(action.payload);
       })
-      .addCase(addTask.rejected, setError);
+      .addCase(addTask.rejected, setError)
+      .addCase(deleteTask.pending, setLoading)
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      })
+      .addCase(deleteTask.rejected, setError);
   },
 });
 

@@ -2,7 +2,7 @@ import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../shared';
 import { Column } from '../../../../entities/column';
-import { fetchTasks, moveTask } from '../../../../entities/taskCard';
+import { fetchTasks, moveTask, deleteTask } from '../../../../entities/taskCard';
 import { TaskStatus } from '../../../../entities/taskCard';
 import { RootState } from '../../../store';
 
@@ -22,9 +22,9 @@ export const Board: React.FC = () => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  // const handleDelete = (taskId: string) => {
-  //   dispatch(deleteTask(taskId));
-  // };
+  const handleDelete = (taskId: string) => {
+    dispatch(deleteTask(taskId));
+  };
 
   const handleTaskMove = (taskId: string, newStatus: TaskStatus) => {
     dispatch(moveTask({ id: taskId, status: newStatus }));
@@ -62,7 +62,7 @@ export const Board: React.FC = () => {
               tasks={tasks}
               status={column}
               onTaskMove={handleTaskMove}
-              // onDelete={handleDelete}
+              onDelete={handleDelete}
             />
           ))}
         </div>
