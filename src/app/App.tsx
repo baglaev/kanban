@@ -1,5 +1,5 @@
 import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
-import { Board } from '../app/pages/boardPage';
+import { Board } from '../pages/boardPage';
 import { Provider } from 'react-redux';
 import store from './store';
 import './App.css';

@@ -1,19 +1,19 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../shared';
-import { Column } from '../../../../entities/column';
+import { useAppDispatch, useAppSelector } from '../../../shared';
+import { Column } from '../../../entities/column';
 import {
   fetchTasksThunk,
   moveTask,
   deleteTaskThunk,
   updateTaskThunk,
-} from '../../../../entities/taskCard';
-import { TaskStatus } from '../../../../entities/taskCard';
-import { RootState } from '../../../store';
+} from '../../../entities/taskCard';
+import { TaskStatus } from '../../../entities/taskCard';
+import { RootState } from '../../../app/store';
 
-import { ModalAdd } from '../../../../features/modalAdd';
+import { ModalAdd } from '../../../features/modalAdd';
 import { Button } from '@consta/uikit/Button';
-import { openModal } from '../../../../features/modalAdd';
+import { openModal } from '../../../features/modalAdd';
 import './styles.scss';
 
 export const Board: React.FC = () => {
