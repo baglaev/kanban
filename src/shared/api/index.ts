@@ -1,5 +1,5 @@
 import { Task, ApiTask, TaskStatus } from '../../entities/taskCard/model/taskCardSlice';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function fetchTasks(): Promise<Task[]> {
   const response = await fetch('https://jsonplaceholder.typicode.com/todos');
@@ -26,7 +26,7 @@ export async function addTask(title: string, description: string): Promise<Task>
     throw new Error('Ошибка добавления задачи');
   }
   const data: ApiTask = await response.json();
-  return { id: Date.now(), title: data.title, description, status: 'Очередь' };
+  return { id: uuidv4(), title: data.title, description, status: 'Очередь' };
 }
 
 export async function deleteTask(taskId: string): Promise<string> {

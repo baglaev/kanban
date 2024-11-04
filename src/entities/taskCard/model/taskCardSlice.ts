@@ -86,7 +86,7 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    moveTask: (state, action: PayloadAction<{ id: string; status: Task['status'] }>) => {
+    moveTask: (state, action: PayloadAction<{ id: string; status: TaskStatus }>) => {
       const task = state.tasks.find((t) => t.id === action.payload.id);
       if (task) {
         // console.log(`Изменение статуса задачи ${task.id} на ${action.payload.status}`);

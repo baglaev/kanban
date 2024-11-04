@@ -16,8 +16,8 @@ interface TaskCardProps {
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onMove }) => {
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id: task.id.toString(),
-    // id: task.id,
+    // id: task.id.toString(),
+    id: task.id,
     data: { column: task.status },
   });
 

@@ -37,17 +37,18 @@ export const Board: React.FC = () => {
     dispatch(updateTaskThunk({ id: taskId, status: newStatus }));
     dispatch(moveTask({ id: taskId, status: newStatus }));
   };
-
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (over && active.id !== over.id) {
+    const activeTaskId = active.id as string;
+
+    if (over && activeTaskId !== over.id) {
       const currentColumnIndex = statuses.indexOf(active.data.current?.column);
       const newColumnIndex = statuses.indexOf(over.id as TaskStatus);
 
       if (newColumnIndex === currentColumnIndex + 1) {
-        handleTaskMove(parseInt(active.id), over.id);
-        // console.log(parseInt(active.id), over.id)
+        handleTaskMove(activeTaskId, over.id as TaskStatus);
+        console.log(activeTaskId, over.id);
       }
     }
   };
