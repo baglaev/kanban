@@ -21,13 +21,7 @@ export const Column: React.FC<ColumnProps> = ({ status, tasks, onTaskMove, onDel
     <div ref={setNodeRef} className="column">
       <h2>{status}</h2>
       {filteredTasks.map((task) => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          onMove={onTaskMove}
-          onDelete={onDelete}
-          // onMove={onTaskMove}
-        />
+        <TaskCard key={task.id} task={task} onMove={onTaskMove} onDelete={onDelete} />
       ))}
     </div>
   );

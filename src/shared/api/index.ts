@@ -1,4 +1,4 @@
-import { Task, ApiTask } from '../../entities/taskCard/model/taskCardSlice';
+import { Task, ApiTask, TaskStatus } from '../../entities/taskCard/model/taskCardSlice';
 // import { v4 as uuidv4 } from 'uuid';
 
 export async function fetchTasks(): Promise<Task[]> {
@@ -37,4 +37,17 @@ export async function deleteTask(taskId: string): Promise<string> {
     throw new Error('Ошибка удаления задачи');
   }
   return taskId;
+}
+
+export async function updateTask(taskId: string, status: TaskStatus): Promise<Task> {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
+  if (!response.ok) {
+    throw new Error('Ошибка обновления задачи');
+  }
+  const updatedTask = await response.json();
+  return { ...updatedTask, id: taskId, status };
 }

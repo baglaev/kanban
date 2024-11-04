@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { fetchTasks, addTask, deleteTask } from '../../../shared/api';
+import { fetchTasks, addTask, deleteTask, updateTask } from '../../../shared/api';
 
 export type TaskStatus = 'Очередь' | 'В работе' | 'На проверке' | 'Выполнено';
 export interface Task {
@@ -60,6 +60,18 @@ export const deleteTaskThunk = createAsyncThunk<string, string, { rejectValue: s
   },
 );
 
+export const updateTaskThunk = createAsyncThunk<
+  Task,
+  { id: string; status: TaskStatus },
+  { rejectValue: string }
+>('tasks/updateTask', async ({ id, status }, { rejectWithValue }) => {
+  try {
+    return await updateTask(id, status);
+  } catch (error: unknown) {
+    return rejectWithValue((error as Error).message);
+  }
+});
+
 const setLoading = (state: TasksState) => {
   state.loading = true;
   state.error = null;
@@ -103,7 +115,15 @@ const tasksSlice = createSlice({
         state.loading = false;
         state.tasks = state.tasks.filter((task) => task.id !== action.payload);
       })
-      .addCase(deleteTaskThunk.rejected, setError);
+      .addCase(deleteTaskThunk.rejected, setError)
+
+      .addCase(updateTaskThunk.fulfilled, (state, action) => {
+        const task = state.tasks.find((t) => t.id === action.payload.id);
+        if (task) {
+          task.status = action.payload.status;
+        }
+      })
+      .addCase(updateTaskThunk.rejected, setError);
   },
 });
 

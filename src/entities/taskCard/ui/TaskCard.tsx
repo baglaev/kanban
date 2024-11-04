@@ -14,15 +14,34 @@ interface TaskCardProps {
   onMove: (id: string, newStatus: TaskStatus) => void;
 }
 
-export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
+export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onMove }) => {
   const { attributes, listeners, setNodeRef } = useDraggable({
     id: task.id.toString(),
     // id: task.id,
     data: { column: task.status },
   });
+
+  const moveToNextStatus = () => {
+    const statuses: TaskStatus[] = ['Очередь', 'В работе', 'На проверке', 'Выполнено'];
+    const currentIndex = statuses.indexOf(task.status);
+
+    if (currentIndex < statuses.length - 1) {
+      const newStatus = statuses[currentIndex + 1];
+      onMove(task.id, newStatus);
+    }
+  };
+
   return (
     <Card verticalSpace="xs" horizontalSpace="xs" className="card" ref={setNodeRef}>
-      <Button onlyIcon iconLeft={IconDrag} view="clear" {...attributes} {...listeners} size="s" />
+      <Button
+        onlyIcon
+        iconLeft={IconDrag}
+        view="clear"
+        {...attributes}
+        {...listeners}
+        size="s"
+        onClick={moveToNextStatus}
+      />
       <Text size="m" view="brand" weight="bold">
         {task.title}title
       </Text>
