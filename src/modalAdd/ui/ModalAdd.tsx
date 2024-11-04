@@ -4,8 +4,9 @@ import { Text } from '@consta/uikit/Text';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../app/store';
 import { closeModal } from '../model/modalAddSlice';
-import { addTask } from '../../entities/taskCard/model/taskCardSlice';
+import { addTaskThunk } from '../../entities/taskCard/model/taskCardSlice';
 import { useState } from 'react';
+import './styles.scss';
 
 export const ModalAdd: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -35,7 +36,7 @@ export const ModalAdd: React.FC = () => {
     }
 
     if (isValid) {
-      dispatch(addTask({ title, description }));
+      dispatch(addTaskThunk({ title, description }));
       dispatch(closeModal());
       setTitle('');
       setDescription('');
@@ -44,11 +45,12 @@ export const ModalAdd: React.FC = () => {
 
   return (
     <Modal
+      className="modal"
       isOpen={isModalOpen}
       hasOverlay
       onClickOutside={() => dispatch(closeModal())}
       onEsc={() => dispatch(closeModal())}>
-      <Text as="p" size="s" view="secondary" lineHeight="m">
+      <Text as="h2" size="m" view="primary" lineHeight="m">
         Добавить задачу
       </Text>
       <form className="form" noValidate onSubmit={handleSubmit}>

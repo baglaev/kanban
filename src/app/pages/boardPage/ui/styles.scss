@@ -1,4 +1,8 @@
 .board {
   display: flex;
   column-gap: 50px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
 }

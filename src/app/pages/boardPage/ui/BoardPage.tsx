@@ -2,28 +2,26 @@ import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../shared';
 import { Column } from '../../../../entities/column';
-import { fetchTasks, moveTask, deleteTask } from '../../../../entities/taskCard';
+import { fetchTasksThunk, moveTask, deleteTaskThunk } from '../../../../entities/taskCard';
 import { TaskStatus } from '../../../../entities/taskCard';
 import { RootState } from '../../../store';
 
 import { ModalAdd } from '../../../../modalAdd';
 import { Button } from '@consta/uikit/Button';
 import { openModal } from '../../../../modalAdd';
-// import { deleteTask } from '../../entities/taskCard';
 import './styles.scss';
 
 export const Board: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const tasks = useAppSelector((state) => state.tasks.tasks);
   const tasks = useAppSelector((state: RootState) => state.tasks.tasks);
   const statuses: TaskStatus[] = ['Очередь', 'В работе', 'На проверке', 'Выполнено'];
 
   useEffect(() => {
-    dispatch(fetchTasks());
+    dispatch(fetchTasksThunk());
   }, [dispatch]);
 
   const handleDelete = (taskId: string) => {
-    dispatch(deleteTask(taskId));
+    dispatch(deleteTaskThunk(taskId));
   };
 
   const handleTaskMove = (taskId: string, newStatus: TaskStatus) => {
@@ -38,8 +36,8 @@ export const Board: React.FC = () => {
       const newColumnIndex = statuses.indexOf(over.id as TaskStatus);
 
       if (newColumnIndex === currentColumnIndex + 1) {
-        // handleTaskMove(parseInt(active.id), over.id);
-        handleTaskMove(active.id, over.id);
+        handleTaskMove(parseInt(active.id), over.id);
+        // console.log(parseInt(active.id), over.id)
       }
     }
   };
@@ -47,6 +45,7 @@ export const Board: React.FC = () => {
   return (
     <>
       <Button
+        className="modal__button-open"
         size="m"
         view="primary"
         label="Добавить задачу"

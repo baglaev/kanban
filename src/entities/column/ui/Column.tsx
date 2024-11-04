@@ -19,7 +19,7 @@ export const Column: React.FC<ColumnProps> = ({ status, tasks, onTaskMove, onDel
 
   return (
     <div ref={setNodeRef} className="column">
-      <h3>{status}</h3>
+      <h2>{status}</h2>
       {filteredTasks.map((task) => (
         <TaskCard
           key={task.id}
