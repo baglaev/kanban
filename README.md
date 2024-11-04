@@ -13,9 +13,9 @@
 - добавлена возможность удаления карточки;
 - реализованы запросы к API на получение, обновление и удаление карточек.
 
-[Деплой]()
+[Деплой: https://kanban-gpn.netlify.app/](https://kanban-gpn.netlify.app/)
 
 ### Запуск локально:
 
-npm install
+npm install<br>
 npm run dev
